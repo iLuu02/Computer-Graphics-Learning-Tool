@@ -1,0 +1,71 @@
+<div class="escena">
+  <div class="controles">
+    <input type="text" [(ngModel)]="userCommand" placeholder="Comando">
+    <button (click)="executeCommand()">Ejecutar</button>
+    <button (click)="resetScene()">Restablecer</button>
+  </div>
+  <p><strong>Valor difuso:</strong> {{ roughness }} <br><strong>Valor especular:</strong> {{ metalness }}</p>
+  <canvas #c></canvas>
+
+  <div class="explicacion">
+    <h3>Modelos de Reflexión</h3>
+    <p>En gráficos 3D, los modelos de reflexión se utilizan para simular cómo la <strong>luz interactúa con las
+        superficies</strong>. Los tipos principales de reflexión son la difusa y la especular.</p>
+
+    <h4>Reflexión Difusa</h4>
+    <p>La reflexión difusa se produce cuando la luz incide en una superficie y se dispersa en <strong>múltiples
+        direcciones</strong>.
+      Este tipo de reflexión es común en materiales <strong>rugosos o mates</strong>, como la madera o el papel. En la
+      reflexión difusa,
+      la intensidad de la luz reflejada es uniforme en todas las direcciones, lo que da como resultado una
+      <strong>apariencia
+        suave y sin brillo</strong>.
+    </p>
+
+    <img src="assets/imagenes/diffuse.png" alt="Reflexión Difusa">
+
+    <h4>Reflexión Especular</h4>
+    <p>La reflexión especular ocurre cuando la luz se refleja de manera uniforme en <strong>una sola dirección</strong>.
+      Esto es
+      característico de <strong>superficies pulidas o brillantes</strong>, como el metal o el vidrio. En la reflexión
+      especular, la
+      intensidad de la luz reflejada depende del ángulo de incidencia y de la superficie, creando puntos brillantes o
+      reflejos nítidos.</p>
+
+    <img src="assets/imagenes/specular.png" alt="Reflexión Especular">
+
+    <h4>Uso</h4>
+    <p>En esta escena nos encontramos con comandos que permiten cambiar el color del material, el color emisivo, la
+      rugosidad y el metalness de la superficie del
+      modelo. Para trabajar con esta escena, se deben introducir comandos en el campo de texto y pulsar el botón
+      "Ejecutar". Para restablecer la escena y la cámara a la posición inicial, se debe utilizar el botón "Restablecer".
+    </p>
+
+    <p>Los comandos disponibles son:</p>
+    <ul>
+      <li><strong><i>cambiarColor(color):</i></strong> Cambia el color de la superficie del modelo.</li>
+      <li><strong><i>cambiarEmisivo(color):</i></strong> Ajusta el color emisivo del modelo, que simula la emisión de
+        luz por parte de la superficie.</li>
+      <li><strong><i>cambiarDifuso(valor):</i></strong> Modifica la rugosidad de la superficie, donde un valor más bajo
+        representa una superficie más lisa y un valor más alto una superficie más rugosa.</li>
+      <li><strong><i>cambiarEspecular(valor):</i></strong> Ajusta el nivel de especularidad del modelo, determinando
+        cuán metálica se ve la superficie.</li>
+    </ul>
+
+    <p><strong>Lista de colores:</strong> [rojo, verde, azul, amarillo, morado, rosa, naranja, marron, cian, gris, oro,
+      plata, blanco, negro]</p>
+
+    <p><strong>Restricciones</strong></p>
+    <p>El valor difuso o especular no puede ser menor a 0 o mayor a 1.</p>
+
+
+    <p><strong>Ejemplos</strong></p>
+    <ul>
+      <li>Cambiar el color a oro: <code>cambiarColor(oro)</code></li>
+      <li>Ajustar el color emisivo a azul: <code>cambiarEmisivo(azul)</code></li>
+      <li>Configurar la rugosidad a 0.8: <code>cambiarDifuso(0.8)</code></li>
+      <li>Establecer la especularidad a 1: <code>cambiarEspecular(1)</code></li>
+    </ul>
+  </div>
+
+</div>

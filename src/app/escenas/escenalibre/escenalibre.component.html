@@ -1,0 +1,167 @@
+<div class="escena">
+  <div class="controles">
+    <input type="text" [(ngModel)]="userCommand" placeholder="Comando">
+    <button (click)="executeCommand()">Ejecutar</button>
+    <button (click)="resetScene()">Restablecer</button>
+  </div>
+  <div class="lists-container">
+    <div class="objects-list">
+      <div *ngFor="let obj of getObjectsList()" class="object-item">
+        <div><strong>ID: {{ obj.id }}</strong></div>
+        <div>Tipo: {{ obj.type }}</div>
+      </div>
+    </div>
+    <div class="lights-list">
+      <div *ngFor="let light of getLightsList()" class="light-item-escenalibre" [style.background]="light.color">
+        <div><strong>ID: {{ light.id }}</strong></div>
+        <div><strong>Tipo: {{ light.type }}</strong></div>
+        <div><strong>Posición: {{ light.position }}</strong></div>
+      </div>
+    </div>
+  </div>
+  <canvas #c></canvas>
+
+  <div class="explicacion">
+    <h3>Escena libre</h3>
+
+    <h4>Uso</h4>
+    <p>En esta escena es posible trabajar mediante comandos con:</p>
+    <ul>
+      <li>Figuras geométricas a las que visualizarse su wireframe</li>
+      <li>Transformaciones geométricas</li>
+      <li>Luces ambientales, direccionales, puntuales y foco</li>
+      <li>Aplicación de texturas, bump mapping y modelos de reflexión</li>
+    </ul>,
+
+    <p>En esta escena es posible aplicar trasformaciones geométricas (traslación, rotación y escalado) además de
+      aplicarles texturas, filtros de
+      minificación y magnidficación, técnmica de bump mapping y modificar las propiedades especular y difusa del
+      material.
+      Los comandos se introducen en el campo de texto y se ejecutan pulsando el botón "Ejecutar". Para
+      restablecer la escena y la cámara a la posición inicial, se debe utilizar el botón "Restablecer".</p>
+
+    <p>Los comandos disponibles son:</p>
+    <p><strong>Figuras geométricas</strong></p>
+    <ul>
+      <li><strong><i>crearPrimitiva(nombrePrimitiva):</i></strong> Permite crear una figura geométrica del tipo
+        nombrePrimitiva centrada en el (0, 0, 0). Los tipos de <strong>figuras disponibles son</strong> plano, cubo,
+        esfera, cilindro,
+        cono, tetraedro, octaedro, icosaedro y torus</li>
+      <li><strong><i>borrarPrimitiva(id):</i></strong> Borra la primitiva con el ID especificado.</li>
+    </ul>
+
+    <p><strong>Transformaciones geométricas</strong></p>
+
+    <ul>
+      <li><strong><i>rotar(id, eje, ángulo):</i></strong> Rota una figura geométrica cuyo id es "id" en el eje
+        especificado (x, y, z) por el ángulo dado en grados.</li>
+      <li><strong><i>escalar(id, escalaX, escalaY, escalaZ):</i></strong> Escala una figura geométrica cuyo id es "id"
+        con los factores especificados en los ejes X, Y y Z.</li>
+      <li><strong><i>trasladar(id, x, y, z):</i></strong> Traslada una figura geométrica cuyo id es "id" a la posición
+        especificada.</li>
+    </ul>
+
+    <p><strong>Luces</strong></p>
+    <ul>
+      <li><strong><i>crearLuzAmbiental(color, intensidad):</i></strong> Crea una luz ambiental con el color y la
+        intensidad especificados en la posición (x,y,z).</li>
+      <li><strong><i>crearLuzDireccional(color, intensidad, x, y, z):</i></strong> Crea una luz direccional con el color
+        e intensidad especificados en la posición (x,y,z).</li>
+      <li><strong><i>crearLuzPuntual(color, intensidad, distancia, decay, x, y, z):</i></strong> Crea una luz puntual
+        con los parámetros especificados de color, intensidad, distancia de la luz y decaimiento en la posición (x,y,z).
+      </li>
+      <li><strong><i>crearLuzFoco(color, intensidad, distancia, ángulo, penumbra, x, y, z):</i></strong> Crea una luz
+        foco con los parámetros especificados de color, intensidad, angulo en grados y penumbra en la posición (x,y,z).
+      </li>
+      <li><strong><i>actualizarLuzAmbiental(id, color, intensidad):</i></strong> Actualiza una luz ambiental con el ID y
+        los parámetros especificados.</li>
+      <li><strong><i>actualizarLuzDireccional(id, color, intensidad):</i></strong> Actualiza una luz direccional con el
+        ID y los parámetros especificados.</li>
+      <li><strong><i>actualizarLuzPuntual(id, color, intensidad, distancia, decay):</i></strong> Actualiza una luz
+        puntual con el ID y los parámetros especificados.</li>
+      <li><strong><i>actualizarLuzFoco(id, color, intensidad, distancia, ángulo, penumbra):</i></strong> Actualiza una
+        luz foco con el ID y los parámetros especificados.</li>
+      <li><strong><i>cambiarPosicionLuz(id, x, y, z):</i></strong> Cambia la posición de la luz con el ID especificado.
+      </li>
+      <li><strong><i>cambiarDireccionLuz(id, x, y, z):</i></strong> Cambia la dirección a la que apunta una luz con el
+        ID
+        especificado.</li>
+      <li><strong><i>borrarLuz(id):</i></strong> Borra la luz con el ID especificado.</li>
+    </ul>
+
+    <p><strong>Lista de colores:</strong> [rojo, verde, azul, amarillo, morado, rosa, naranja, marron, cian, gris, oro,
+      plata, blanco, negro]</p>
+
+    <p><strong>Texturas</strong></p>
+    <p>Nota: Para apreciar bien los cambios en las texturas, crear luces brillantes. Para apreciar el bump mapping y los modelos de reflexión crear luces direccionales apuntando a la figura.</p>
+    <ul>
+      <li><strong><i>aplicarTextura(id, nombreTextura):</i></strong> Aplica una textura a la figura geométrica con el ID
+        especificado. Los nombres de texturas son "Ladrillos, Tela, Gravilla y Azulejos"</li>
+      <li><strong><i>setBumpScale(id, escala):</i></strong> Establece la escala del mapa de relieve para la figura
+        geométrica con
+        el ID especificado.</li>
+      <li><strong><i>setMinFilter(id, filtro):</i></strong> Establece el filtro de minimización para la textura de la
+        figura geométrica con el ID especificado.</li>
+      <li><strong><i>setMagFilter(id, filtro):</i></strong> Establece el filtro de magnificación para la textura del
+        objeto con el ID especificado.</li>
+      <li><strong><i>cambiarDifuso(id, intensidad):</i></strong> Cambia la propiedad difusa de la figura geométrica con
+        el ID
+        especificado.</li>
+      <li><strong><i>cambiarEspecular(id, valor):</i></strong> Cambia la propiedad especular de la figura geométrica con
+        el ID
+        especificado.</li>
+    </ul>
+
+    <p><strong>Restricciones</strong></p>
+    <ul>
+      <li>Número máximo de figuras geométricas simultáneas es 10.</li>
+      <li>Número máximo de luces simultáneas es 10.</li>
+      <li>El valor de bump map no puede ser menor a 0 ni mayor a 1000</li>
+      <li>Los valores especular y difuso tendrán valores entre 0 y 1</li>
+      <li>Los parámetros de las luces no pueden ser menor a 0, exceptuando la posición y dirección, se reemplaza
+        automáticamente por 0 dado el caso</li>
+    </ul>
+
+    <p><strong>Ejemplos</strong></p>
+    <ul>
+      <li>Crear un cubo: <code>crearPrimitiva(cubo)</code></li>
+      <li>Crear un tetraedro: <code>crearPrimitiva(tetraedro)</code></li>
+
+      <li>Trasladar un cubo (ID 0) los valores (2,1,2) en cada eje de coordenadas: <code>trasladar(0, 2, 1, 2)</code>
+      <li>Rotar un cubo (ID 0) en el eje X por 45 grados: <code>rotar(0, x, 45)</code></li>
+      <li>Escalar un cubo (ID 0) por factores de 2, 2, 2: <code>escalar(0, 2, 2, 2)</code></li>
+      <li>Borrar una primitiva con ID 0: <code>borrarPrimitiva(0)</code></li>
+
+      <li>Crear una luz ambiental con color blanco e intensidad 2: <code>crearLuzAmbiental(blanco,2)</code></li>
+      <li>Crear una luz direccional con color rojo, intensidad 2, en la posición (2, 2, 2):
+        <code>crearLuzDireccional(rojo, 2, 2, 2, 2)</code>
+      </li>
+      <li>Crear una luz puntual con color azul, intensidad 2, distancia 5, decay 2, en la posición (1, 1, 1):
+        <code>crearLuzPuntual(azul, 2, 5, 2, 1, 1, 1)</code>
+      </li>
+      <li>Crear una luz foco con color verde, intensidad 2, distancia 5, ángulo 30, penumbra 0.5, en la posición (3, 3,
+        3): <code>crearLuzFoco(verde, 2, 5, 30, 0.5, 3, 3, 3)</code></li>
+
+      <li>Actualizar la luz ambiental con ID 0 a color morado e intensidad 0.5:
+        <code>actualizarLuzAmbiental(0, morado, 0.5)</code>
+      </li>
+      <li>Actualizar la luz direccional con ID 1 a color amarillo e intensidad 1.5:
+        <code>actualizarLuzDireccional(1, amarillo, 1.5)</code>
+      </li>
+      <li>Actualizar la luz puntual con ID 2 a color rosa, intensidad 1, distancia 4, decay 1:
+        <code>actualizarLuzPuntual(2, rosa, 1, 4, 1)</code>
+      </li>
+      <li>Actualizar la luz foco con ID 3 a color cian, intensidad 1.2, distancia 3, ángulo 45, penumbra 0.3:
+        <code>actualizarLuzFoco(3, cian, 1.2, 3, 45, 0.3)</code>
+      </li>
+
+      <li>Cambiar la posición de la luz con ID 1 a (3, 1, 3): <code>cambiarPosicionLuz(1, 3, 1, 3)</code></li>
+      <li>Cambiar la dirección de la luz con ID 2 a (0, 4, -4): <code>cambiarDireccionLuz(2, 0, 4, -4)</code></li>
+
+      <li>Aplicar la textura "Ladrillos" al objeto con ID 1: <code>aplicarTextura(1, Ladrillos)</code></li>
+      <li>Cambiar la escala de bump del objeto con ID 1 a 2: <code>setBumpScale(1, 2)</code></li>
+
+      <li>Cambiar la propiedad difusa del objeto con ID 1 a 0.5: <code>cambiarDifuso(1, 0.5)</code></li>
+      <li>Cambiar la propiedad especular del objeto con ID 1 a 0.8: <code>cambiarEspecular(1, 0.8)</code></li>
+    </ul>
+  </div>

@@ -1,0 +1,55 @@
+<header>
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #5d009b;">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="/main/transformaciones">TFG</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLink="/main/transformaciones">Transformaciones</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdownMenuLink" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Luces
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" routerLink="/main/ambiental">Ambiental</a></li>
+              <li><a class="dropdown-item" routerLink="/main/direccional">Direccional</a></li>
+              <li><a class="dropdown-item" routerLink="/main/puntual">Puntual</a></li>
+              <li><a class="dropdown-item" routerLink="/main/foco">Foco</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdownMenuLinkTextures" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Texturas
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkTextures">
+              <li><a class="dropdown-item" routerLink="/main/aplicacion">Aplicación</a></li>
+              <li><a class="dropdown-item" routerLink="/main/bumpmapping">Bump Mapping</a></li>
+              <li><a class="dropdown-item" routerLink="/main/reflexion">Reflexión</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" routerLink="/main/grafo">Grafo</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" routerLink="/main/malla">Mallas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" routerLink="/main/escenalibre">Escena libre</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <router-outlet></router-outlet>
+</header>
+
+<footer class="bg-dark text-white text-center py-3">
+  <p>Herramienta para realizar ejercicios prácticos de Informática Gráfica - 2024 &copy; Fátima Sanz Baena</p>
+</footer>

@@ -1,0 +1,77 @@
+<div class="escena">
+  <div class="controles">
+    <input type="text" [(ngModel)]="userCommand" placeholder="Comando">
+    <button (click)="executeCommand()">Ejecutar</button>
+    <button (click)="resetScene()">Restablecer</button>
+  </div>
+  <div class="lights-list">
+    <div *ngFor="let light of lights" class="light-item" [style.background]="light.light.color.getStyle()">
+      <div><strong>ID: {{ light.id }}</strong></div>
+      <div><strong>Intensidad: {{ light.light.intensity }}</strong></div>
+    </div>
+  </div>
+  <canvas #c></canvas>
+
+  <div class="explicacion">
+    <h3>Luz puntual</h3>
+    <p>La luz puntual es un tipo de iluminación utilizada en entornos 3D que emite luz desde un punto específico en
+      todas
+      las direcciones. Este tipo de luz es ideal para simular bombillas, velas y cualquier otra fuente de luz que se
+      propaga uniformemente desde un punto.</p>
+
+    <img src="assets/imagenes/luzPuntual.png" alt="Luz Puntual">
+
+    <p>Viene determinada por los siguientes parámetros:</p>
+    <ul>
+      <li><strong>Intensidad</strong> de la luz</li>
+      <li><strong>Color</strong> de la luz</li>
+      <li><strong>Distancia</strong> hasta donde llega la luz</li>
+      <li><strong>Decaimiento</strong> que define la rapidez con la que la luz pierde intensidad con la distancia</li>
+      <li><strong>Posición</strong> de la luz en el espacio</li>
+    </ul>
+
+    <h4>Uso</h4>
+    <p>En esta escena es posible trabajar con <strong>múltiples luces puntuales</strong> de manera simultánea y ver los
+      efectos que producen sobre el modelo. Para ello se proporciona una serie de comandos que permiten tanto crear y
+      borrar luces, modificar los parámetros de intensidad, color, distancia y decaimiento de las ya existentes, además
+      de
+      cambiar la posición de la luz.</p>
+
+    <strong>Todas las luces creadas apuntan al (0, 0, 0) por defecto.</strong>
+
+    <p>Para trabajar con esta escena introduciremos comandos en el campo de texto y pulsaremos el botón "Ejecutar". Para
+      restablecer la escena y la cámara a la posición inicial utilizaremos el botón "Restablecer".</p>
+
+    <p>Los comandos disponibles son:</p>
+
+    <ul>
+      <li><strong><i>crearLuzPuntual(color, intensidad, distancia, decay, x, y, z):</i></strong> Permite crear una luz
+        puntual con uno de los colores de la lista proporcionada, un valor de intensidad numérico, distancia hasta donde
+        llega la luz, decaimiento y la posición en el espacio determinada por el punto (x,y,z). <strong>Si la distancia
+          es 0, por defecto no tendrá límite de distancia.</strong></li>
+      <li><strong><i>cambiarPosicion(id, x, y, z):</i></strong> Permite cambiar la posición de la luz "id" de su punto
+        actual al punto (x,y,z).</li>
+      <li><strong><i>actualizarLuz(id, color, intensidad, distancia, decay):</i></strong> Permite actualizar el color,
+        intensidad, distancia y decaimiento de la luz "id".</li>
+      <li><strong><i>borrarLuz(id):</i></strong> Permite borrar la luz puntual "id".</li>
+    </ul>
+
+    <p><strong>Lista de colores:</strong> [rojo, verde, azul, amarillo, morado, rosa, naranja, marron, cian, gris, oro,
+      plata, blanco, negro]</p>
+
+    <p><strong>Restricciones</strong></p>
+    <p>El número máximo de luces simultáneas es 10.</p>
+
+    <p><strong>Ejemplos</strong></p>
+    <ul>
+      <li>Crear una luz puntual cian con intensidad 3, distancia 10 y decaimiento 2 en el punto (3, 3, 3):
+        <code>crearLuzPuntual(cian, 3, 10, 2, 3, 3, 3)</code>
+      </li>
+      <li>Cambiar la posición de la luz con id 1 al punto (1, 2, 3): <code>cambiarPosicion(1, 1, 2, 3)</code></li>
+      <li>Actualizar las propiedades de la luz 1: <code>actualizarLuz(1,amarillo,2,15,3)</code> <strong>. Asegurarse de
+          no introducir espacios entre los parámetros</strong></li>
+      <li>Eliminar la luz 1: <code>borrarLuz(1)</code></li>
+    </ul>
+  </div>
+
+</div>

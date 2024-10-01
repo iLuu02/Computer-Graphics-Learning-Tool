@@ -1,0 +1,76 @@
+<div class="escena">
+  <div class="controles">
+    <input type="text" [(ngModel)]="userCommand" placeholder="Comando">
+    <button (click)="executeCommand()">Ejecutar</button>
+    <button (click)="resetScene()">Restablecer</button>
+  </div>
+  <canvas #c></canvas>
+
+  <div class="explicacion">
+    <h3>Transformaciones Afines</h3>
+    <p>Las transformaciones afines son operaciones matemáticas que se aplican a puntos y vectores en un espacio afín
+      (como un espacio 3D). Estas transformaciones mantienen algunas propiedades geométricas como:</p>
+    <ul>
+      <li><strong>Colinealidad:</strong> Los puntos que están alineados siguen alineados.</li>
+      <li><strong>Proporcionalidad:</strong> Las proporciones entre distancias se mantienen.</li>
+    </ul>
+    <p>Sin embargo, lo que puede cambiar y no mantenerse de forma directa son las distancias (sí se mantiene la
+      proporción entre distancias por la proporcionalidad) y los ángulos absolutos.
+    </p>
+
+    <h4>Traslación</h4>
+    <p>La traslación mueve un objeto de una posición a otra en el espacio sin cambiar su orientación.
+    </p>
+    <img src="assets/imagenes/traslacion.png" alt="Matriz de Traslación">
+    <p>La matriz de traslación añade un valor a las coordenadas de los puntos del objeto. Es decir, es equivalente a la
+      suma de un vector a un punto. Determinan cuánto se mueve el objeto en cada eje.</p>
+
+    <h4>Rotación</h4>
+    <p>La rotación gira un objeto alrededor de un eje específico en el espacio 3D. La rotación se describe utilizando ángulos y puede realizarse alrededor de
+      los ejes x, y o z.</p>
+    <img src="assets/imagenes/rotacion.jpg" alt="Matriz de Rotación">
+
+    <h4>Escalado</h4>
+    <p>El escalado cambia el tamaño de un objeto sin alterar su forma. Este proceso se representa con una matriz que multiplica las coordenadas del
+      punto por factores de escala.</p>
+    <img src="assets/imagenes/escalado.png" alt="Matriz de Traslación">
+    <p>Aquí <i>sx, sy y sz  </i>son los factores por los que escalamos el objeto en las direcciones x, y y z, respectivamente.
+    </p>
+
+
+    <h4>Pila de Matrices</h4>
+    <p>Todas las transformaciones se caracterizan por generar una <strong>matriz de transformación de tamaño 4x4</strong>. Estas matrices
+      se aplicarán sobre la matriz de transformación del modelo (M) mediante el <strong>producto</strong> de ambas.</p>
+
+    <p>Cuando queremos aplicar una transformación geométrica (T) sobre el modelo se realizará una multiplicación entre
+      la transformación y la matriz del modelo actual: <i>M = M * T</i></p>
+
+    <p>Las transformaciones geométricas son almacenadas en una <strong>pila</strong>. Como sabemos, el orden de extracción en una pila es
+      LIFO, lo que significa que la última transformación que se introdujo en la misma, será la primera en salir. Debido
+      a esto y a que la multiplicación de matrices <strong>no es conmutativa</strong> el orden habitual para aplicar
+      transformaciones es: <i>M = T * R * S</i> donde primero se aplicará el escalado (S), posteriormente la rotación
+      (R) y por último la traslación (T). </p>
+
+    <p>El orden de las transformaciones es crucial ya que no respectarlo puede generar resultados no deseados. Aplicar
+      el escalado primero cambia el tamaño del objeto relativo a su origen, rotarlo después ajusta su orientación local
+      y finalmente, trasladarlo mueve el objeto a la posición deseada. Alterar este orden puede causar fallos como
+      movimientos inesperados, cambios de tamaño incorrectos y orientaciones erróneas del objeto.</p>
+    <h4>Uso</h4>
+    <p>Para trabajar con esta escena introduciremos comandos en el campo de texto y pulsaremos el botón "Ejecutar". Para restablecer el cubo y la cámara a la posición inicial utilizaremos el botón "Restablecer"</p>
+    <p>Los comandos disponibles son:</p>
+    <ul>
+      <li><i><strong>trasladar(x, y, z):</strong></i> Mueve el cubo las unidades (x,y,z) en los ejes correspondientes en el espacio tridimensional.</li>
+      <li><i><strong>rotar(axis, angulo):</strong></i> Rota el cubo en el eje determinado por axis (x,y o z) tantos grados como indique ángulo.</li>
+      <li><i><strong>escalar(sx, sy, sz):</strong></i> Escala el cubo en los ejes x, y, z tanto como se indique por sx, sy y sz.<strong> Utilizar el valor 1 si no se quiere escalar en ese eje</strong>, el valor 0 impedirá cualquier escalado posterior.</li>
+    </ul>
+
+    <p>Es posible encadenar transformaciones separandolas por punto y coma.</p>
+    
+    <p><strong>Ejemplos</strong></p>
+    <ul>
+      <li>Escalado, Rotación y Traslación (<strong>orden correcto</strong>): <code>escalar(2, 1, 2);rotar(y, 45);trasladar(-2, 2, -2)</code></li>
+      <li>Solo una transformación: <code>trasladar(1, 1, 1) o rotar(x, 45) o escalar(1, 2, 1)</code></li>
+      <li>Encadenar transformaciones: <code>escalar(2, 1, 2);escalar(2, 1, 2);rotar(x, 45);rotar(y, 45);trasladar(3, 1, 3)</code></li>
+    </ul>
+  </div>
+</div>

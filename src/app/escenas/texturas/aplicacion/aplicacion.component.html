@@ -1,0 +1,120 @@
+<div class="escena">
+  <div class="controles">
+    <input type="text" [(ngModel)]="userCommand" placeholder="Comando">
+    <button (click)="executeCommand()">Ejecutar</button>
+    <button (click)="resetScene()">Restablecer</button>
+    <div class="texture-buttons">
+      <button *ngFor="let texture of textures" (click)="aplicarTextura([texture.path])"
+        [style.backgroundImage]="'url(' + texture.path + ')'"></button>
+    </div>
+  </div>
+
+  <p><strong>Minificación</strong>: {{ currentMinFilter }} <br><strong>Magnificación</strong>: {{ currentMagFilter }}</p>
+  <canvas #c></canvas>
+
+  <div class="explicacion">
+    <h3>Texturas</h3>
+    <p>Las texturas son imágenes bidimensionales aplicadas a las superficies de los modelos para <strong>agregar
+        detalles
+        visuales</strong> adicionales sin incrementar la complejidad geométrica. Permiten definir diferentes valores de
+      color para
+      cada fragmento del modelo, proporcionando un alto nivel de detalle. Las texturas se utilizan para simular
+      materiales como madera, metal, piel, y más, haciendo que los modelos 3D se vean más realistas.</p>
+
+    <h4>Coordenadas de Textura</h4>
+    <p>Para aplicar una textura a un modelo 3D, es necesario mapear los vértices del modelo a los
+      <strong>texels</strong> (similar a los píxeles de una imagen) de la textura
+      mediante coordenadas de textura, también conocidas como <strong>coordenadas UV</strong>. Estas coordenadas indican
+      qué parte de la
+      textura se aplica a cada parte del modelo:
+    </p>
+    <ul>
+      <li><strong>Coordenadas UV:</strong> Las coordenadas u y v tienen valores en el rango de [0, 1] y representan la
+        posición en la textura bidimensional.</li>
+      <li><strong>Espacio de la Textura:</strong> Definido por los ejes s y t, también con valores en el rango de [0,
+        1], que especifican cómo la textura se aplica a la superficie del modelo.</li>
+    </ul>
+    <p>Durante el proceso de <strong>rasterización</strong>, las coordenadas de textura de cada vértice se interpolan, y
+      las coordenadas
+      resultantes se utilizan para mapear los texels de la textura al espacio de la imagen.</p>
+
+    <img src="assets/imagenes/coordenadas.png" alt="Luz Puntual">
+
+    <h4>Interpolación</h4>
+    <p>La técnica de interpolación permite solucionar la diferencia entre los valores en el espacio de imagen (que son
+      decimales) y las imágenes raster (formadas por coordenadas enteras)
+      al trabajar con texturas. Los métodos de interpolación que se pueden emplear son:</p>
+    <ul>
+      <li><strong>Nearest:</strong> Escoge el texel más próximo a las coordenadas en el espacio de la imagen sin aplicar
+        interpolación. Esto puede producir un <strong>efecto pixelado</strong>.</li>
+      <li><strong>Linear:</strong> Ejecuta una <strong>interpolación lineal</strong> entre los cuatro texels que rodean
+        las coordenadas
+        en el espacio de la imagen, lo cual suaviza la textura y mejora su calidad visual.</li>
+    </ul>
+
+    <p>Es importante destacar que la interpolación ayuda a
+      resolver tanto el problema de la <strong>magnificación</strong> como el de la <strong>minificación</strong>. Sin
+      embargo, no siempre los soluciona
+      por completo, ya que al ampliar o reducir una imagen más allá de su resolución original, aún pueden aparecer
+      ciertos artefactos o pérdida de detalle.</p>
+
+    <img src="assets/imagenes/filtros.png" alt="Luz Puntual">
+
+    <h4>Mipmapping</h4>
+    <p>El mipmapping es una técnica empleada para abordar problemas de <strong>minificación</strong>, los cuales surgen
+      cuando una
+      textura contiene más texels que el número de píxeles que ocupa el polígono en la pantalla. Esta técnica crea
+      versiones reducidas de la textura original, conocidas como <strong>mipmaps</strong>, donde cada nivel sucesivo de
+      mipmap tiene
+      dimensiones que son la mitad del nivel anterior. Esta técnica permite mejorar el rendimiento y utilizar texturas
+      de diferentes resoluciones cuando cambia la distancia y ángulo visual, además de que mejora la calidad visual.
+    </p>
+
+
+    <h4>Filtros de Magnificación y Minificación</h4>
+    <p>Los filtros de magnificación y minificación se utilizan para manejar cómo se aplican las texturas cuando la
+      resolución de la textura y la superficie a la que se aplica no coinciden:</p>
+    <ul>
+      <li><strong>Filtros de Magnificación:</strong>
+        <ul>
+          <li><strong>NearestFilter:</strong> Selecciona el texel más cercano sin realizar interpolación, lo que puede
+            resultar en una apariencia pixelada.</li>
+          <li><strong>LinearFilter:</strong> Realiza una interpolación lineal para suavizar la textura ampliada.</li>
+        </ul>
+      </li>
+      <li><strong>Filtros de Minificación:</strong>
+        <ul>
+          <li><strong>NearestFilter:</strong> Selecciona el texel más cercano sin interpolación.</li>
+          <li><strong>LinearFilter:</strong> Interpola los texels vecinos para suavizar la textura reducida.</li>
+          <li><strong>MipMap Filters:</strong> Utilizan mipmaps combinados con Nearest o Linear filtering para mejorar
+            la calidad y el rendimiento.</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h4>Uso</h4>
+    <p>En esta escena es posible aplicar diferentes texturas pulsando los botones al lado del botón "reestablecer".
+      También se pueden aplicar filtros de magnificación y minificación para
+      observar los efectos en el modelo. Para trabajar con esta escena introduciremos comandos en el campo de texto y
+      pulsaremos el botón "Ejecutar". Para restablecer la escena y la cámara a la posición inicial utilizaremos el botón
+      "Restablecer"
+
+    <p>Los comandos disponibles son:</p>
+    <ul>
+      <li><strong><i>setMinFilter(tipoFiltro):</i></strong> Establece el filtro de minificación de la textura. Los tipos
+        de filtro pueden ser 'NearestFilter', 'LinearFilter', 'NearestMipMapNearestFilter', 'LinearMipMapNearestFilter',
+        'NearestMipMapLinearFilter' o 'LinearMipMapLinearFilter'. <strong>Alejar la cámara para apreciar mejor el
+          cambio</strong></li>
+      <li><strong><i>setMagFilter(tipoFiltro):</i></strong> Establece el filtro de magnificación de la textura. Los
+        tipos de filtro pueden ser 'NearestFilter' o 'LinearFilter'. <strong>Acercar la cámara para apreciar mejor el
+          cambio</strong></li>
+    </ul>
+
+    <p><strong>Ejemplos</strong></p>
+    <ul>
+      <li>Establecer el filtro de minificación a 'NearestFilter': <code>setMinFilter(NearestFilter)</code></li>
+      <li>Establecer el filtro de magnificación a 'LinearFilter': <code>setMagFilter(NearestFilter)</code></li>
+    </ul>
+  </div>
+
+</div>

@@ -1,0 +1,84 @@
+<div class="escena">
+  <div class="controles">
+    <input type="text" [(ngModel)]="userCommand" placeholder="Comando">
+    <button (click)="executeCommand()">Ejecutar</button>
+    <button (click)="resetScene()">Restablecer</button>
+  </div>
+  <div class="lights-list">
+    <div *ngFor="let light of lights" class="light-item" [style.background]="light.light.color.getStyle()">
+      <div><strong>ID: {{ light.id }}</strong></div>
+      <div><strong>Intensidad: {{ light.light.intensity }}</strong></div>
+    </div>
+  </div>
+  <canvas #c></canvas>
+
+  <div class="explicacion">
+    <h3>Luz foco</h3>
+    <p>La luz foco es un tipo de iluminación utilizada en entornos 3D que emite luz desde un punto específico y está
+      enfocada en una dirección particular dentro de un ángulo definido. Este tipo de luz es ideal para simular faros,
+      linternas y cualquier otra luz que necesite concentrarse en un área específica.</p>
+
+    <img src="assets/imagenes/foco.png" alt="Luz Foco">
+
+    <p>Viene determinada por los siguientes parámetros:</p>
+    <ul>
+      <li><strong>Intensidad</strong> de la luz</li>
+      <li><strong>Color</strong> de la luz</li>
+      <li><strong>Distancia</strong> hasta donde llega la luz</li>
+      <li><strong>Ángulo</strong> del cono de luz</li>
+      <li><strong>Penumbra</strong> que define la suavidad del borde del cono de luz</li>
+      <li><strong>Posición</strong> de la luz en el espacio</li>
+      <li><strong>Dirección</strong> a la que apunta la luz</li>
+    </ul>
+
+    <h4>Uso</h4>
+    <p>En esta escena es posible trabajar con <strong>múltiples luces foco</strong> de manera simultánea y ver los
+      efectos que producen sobre el modelo. Para ello se proporciona una serie de comandos que permiten tanto crear y
+      borrar luces, modificar los parámetros de intensidad, color, distancia, ángulo y penumbra de las ya existentes,
+      además de cambiar la posición de la luz y la dirección a la que apuntan los rayos.</p>
+
+    <strong>Todas las luces creadas apuntan al (0, 0, 0) por defecto.</strong>
+
+    <p>Para trabajar con esta escena introduciremos comandos en el campo de texto y pulsaremos el botón "Ejecutar". Para
+      restablecer la escena y la cámara a la posición inicial utilizaremos el botón "Restablecer".</p>
+
+    <p>Los comandos disponibles son:</p>
+
+    <ul>
+      <li><strong><i>crearLuzFoco(color, intensidad, distancia, angulo, penumbra, x, y, z):</i></strong> Permite crear
+        una luz foco con uno de los colores de la lista proporcionada, un valor de intensidad numérico, distancia hasta
+        donde llega la luz, ángulo del cono de luz, penumbra y la posición en el espacio determinada por el punto
+        (x,y,z). <strong>Si la distancia es 0, por defecto no tendrá límite.</strong></li>
+      <li><strong><i>cambiarPosicion(id, x, y, z):</i></strong> Permite cambiar la posición de la luz "id" de su punto
+        actual al punto (x,y,z).</li>
+      <li><strong><i>cambiarDireccionLuz(id, x, y, z):</i></strong> Permite cambiar hacia dónde apuntarán los rayos de
+        la
+        luz "id" (punto x,y,z en el espacio).
+      </li>
+      <li><strong><i>actualizarLuz(id, color, intensidad, distancia, angulo, penumbra):</i></strong> Permite actualizar
+        el color, intensidad, distancia, ángulo y penumbra de la luz "id".<strong>
+          Asegurarse de no introducir espacios entre los parámetros</strong></li>
+      <li><strong><i>borrarLuz(id):</i></strong> Permite borrar la luz foco "id".</li>
+    </ul>
+
+    <p><strong>Lista de colores:</strong> [rojo, verde, azul, amarillo, morado, rosa, naranja, marron, cian, gris, oro,
+      plata, blanco, negro]</p>
+
+    <p><strong>Restricciones</strong></p>
+    <p>El número máximo de luces simultáneas es 10.</p>
+
+    <p><strong>Ejemplos</strong></p>
+    <ul>
+      <li>Crear una luz foco naranja con intensidad 3, distancia 10, ángulo 30 y penumbra 0.5 en el punto (3, 3, 3):
+        <code>crearLuzFoco(naranja, 3, 10, 30, 0.5, 3, 3, 3)</code>
+      </li>
+      <li>Cambiar la posición de la luz con id 1 al punto (-1, 2, 3): <code>cambiarPosicion(1, -1, 2, 3)</code></li>
+      <li>Cambiar la dirección de la luz 1 para que apunte al punto (1, 1, 0):
+        <code>cambiarDireccionLuz(1, 1, 1, 0)</code>
+      </li>
+      <li>Actualizar las propiedades de la luz 1: <code>actualizarLuz(1,rojo,2,15,45,0.3)</code> <strong>.
+          Asegurarse de no introducir espacios entre los parámetros</strong></li>
+      <li>Eliminar la luz 1: <code>borrarLuz(1)</code></li>
+    </ul>
+  </div>
+</div>

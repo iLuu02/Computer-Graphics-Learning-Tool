@@ -1,0 +1,102 @@
+<div class="escena">
+  <div class="controles">
+    <input type="text" [(ngModel)]="userCommand" placeholder="Comando">
+    <button (click)="executeCommand()">Ejecutar</button>
+    <button (click)="resetScene()">Restablecer</button>
+  </div>
+  
+  <div class="identificadores">
+    <div class="planetas">
+      <div *ngFor="let planet of planets" class="planeta">
+        <span class="color-box" [style.backgroundColor]="planet.color"></span>
+        Planeta {{planet.id}}
+        <div class="satelites">
+          <div *ngFor="let moon of planet.moons" class="satelite">
+            <span class="color-box" [style.backgroundColor]="moon.color"></span>
+            Satélite {{moon.id}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <canvas #c></canvas>
+
+  <div class="explicacion">
+    <h3>Grafos de Escena</h3>
+    <p>En gráficos 3D, un <strong>grafo de escena</strong> es una estructura de datos que se utiliza para organizar y
+      gestionar
+      <strong>objetos en una escena</strong>. Un grafo de escena permite establecer <strong>relaciones
+        jerárquicas</strong> entre los
+      objetos, facilitando la transformación y manipulación de grupos de objetos.
+    </p>
+
+    <h4>Jerarquía</h4>
+    <p>En un grafo de escena, los objetos se organizan en una <strong>estructura jerárquica</strong>. Esto significa que
+      algunos objetos pueden ser <strong>padres</strong> de otros objetos, que a su vez pueden tener sus propios
+      <strong>hijos</strong>.
+      Las transformaciones aplicadas a un objeto padre se propagan a todos sus hijos, manteniendo la <strong>relación
+        espacial</strong> entre ellos. Por ejemplo, si un objeto padre rota, todos sus hijos rotarán junto con él.
+    </p>
+
+    <p>En esta escena nos encontramos como nodo raíz y el padre del resto con el "Sol", el cual tendrá a su alrededor
+      orbitando planetas (hijos de este), a su vez, estos planetas tendrán más hijos, en este caso satélites, que los
+      orbitan. Las rotaciones aplicadas al Sol afectarán tanto a los planetas como a los satélites, mientras que las
+      rotaciones a los planetas afectarán exclusivamente a sus satélietes. También se pueden rotar los propios satélites
+      para ver como gira su órbita</p>
+
+    <img src="assets/imagenes/grafo.jpg" alt="Grafo de Escena" style="max-width: 30%; height: auto;">
+
+
+    <h4>Uso</h4>
+    <p>En esta escena, los objetos pueden ser planetas y satélites, y se utilizan comandos para crear, modificar y
+      eliminar
+      estos objetos en la escena. Los comandos se introducen en el campo de texto y se ejecutan pulsando el botón
+      "Ejecutar".
+      Para restablecer la escena y la cámara a la posición inicial, se debe utilizar el botón "Restablecer".</p>
+
+    <p>Los comandos disponibles son:</p>
+    <ul>
+      <li><strong><i>crearPlaneta(color):</i></strong> Crea un planeta con el color especificado y lo añade a la
+        órbita del sol.</li>
+      <li><strong><i>crearSatelite(planetId, color):</i></strong> Crea un satélite con el color especificado y lo
+        añade a la órbita del planeta identificado por planetId.</li>
+      <li><strong><i>borrarPlaneta(planetId):</i></strong> Elimina el planeta identificado por planetId y todos sus
+        satélites.</li>
+      <li><strong><i>borrarSatelite(planetId, satelliteId):</i></strong> Elimina el satélite identificado por
+        satelliteId del planeta identificado por planetId.</li>
+      <li><strong><i>rotarSol(eje, angulo):</i></strong> Rota el sol alrededor del eje especificado (x, y o z) en el
+        ángulo indicado.</li>
+      <li><strong><i>rotarPlaneta(planetId, eje, angulo):</i></strong> Rota el planeta identificado por planetId
+        alrededor del eje especificado (x, y o z) en el ángulo indicado.</li>
+      <li><strong><i>rotarSatelite(planetId, satelliteId, eje, angulo):</i></strong> Rota el satélite identificado por
+        satelliteId del planeta identificado por planetId alrededor del eje especificado (x, y o z) en el ángulo
+        indicado.</li>
+    </ul>
+
+    <p><strong>Lista de colores:</strong> [rojo, verde, azul, amarillo, morado, rosa, naranja, marrón, cian, gris, oro,
+      plata, blanco, negro]</p>
+
+    <p><strong>Restricciones</strong></p>
+    <ul>
+      <li>El número máximo de planetas es 4.</li>
+      <li>El número máximo de satélites por planeta es 2.</li>
+    </ul>
+    
+    <p><strong>Ejemplos</strong></p>
+    <ul>
+      <li>Crear un planeta de color verde: <code>crearPlaneta(verde)</code></li>
+      <li>Crear un planeta de color rojo: <code>crearPlaneta(rojo)</code></li>
+      <li>Crear un satélite de color morado para el planeta con ID 1: <code>crearSatelite(1, morado)</code></li>
+      <li>Crear un satélite de color cian para el planeta con ID 1: <code>crearSatelite(1, cian)</code></li>
+      <li>Crear un satélite de color rosa para el planeta con ID 2: <code>crearSatelite(2, rosa)</code></li>
+      <li>Rotar el sol 45 grados alrededor del eje x: <code>rotarSol(x, 45)</code></li>
+      <li>Rotar el planeta con ID 1 30 grados alrededor del eje x: <code>rotarPlaneta(1, x, 30)</code></li>
+      <li>Rotar el satélite con ID 3 del planeta con ID 2 60 grados alrededor del eje z:
+        <code>rotarSatelite(2, 3, z, 60)</code></li>
+      <li>Borrar el planeta con ID 1: <code>borrarPlaneta(1)</code></li>
+      <li>Borrar el satélite con ID 3 del planeta con ID 2: <code>borrarSatelite(2, 3)</code></li>
+    </ul>
+
+  </div>
+</div>

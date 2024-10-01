@@ -1,0 +1,75 @@
+<div class="escena">
+  <div class="controles">
+    <input type="text" [(ngModel)]="userCommand" placeholder="Comando">
+    <button (click)="executeCommand()">Ejecutar</button>
+    <button (click)="resetScene()">Restablecer</button>
+  </div>
+  <canvas #c></canvas>
+
+  <div class="explicacion">
+    <h3>Mallas de Triángulos</h3>
+    <p>Una <strong>malla de triángulos</strong> es una estructura utilizada en gráficos 3D para representar la
+      superficie de objetos tridimensionales. Consiste en una colección de triángulos conectados por vértices
+      compartidos, formando una superficie continua.</p>
+
+    <h4>Funcionamiento</h4>
+    <p>
+      - <strong>Vértices</strong>: Puntos en el espacio 3D con coordenadas (x, y, z).<br>
+      - <strong>Triángulos</strong>: Cada triángulo se compone de tres vértices conectados por aristas.<br>
+      - <strong>Conexión de Triángulos</strong>: Los triángulos se conectan compartiendo vértices, creando una
+      superficie compleja a partir de triángulos simples.<br>
+      - <strong>Normales</strong>: Vectores perpendiculares a la superficie de los triángulos, utilizados para calcular
+      la interacción de la luz con la superficie.
+    </p>
+
+    <img src="assets/imagenes/malla.png" alt="Malla de Triángulos - Delfín">
+
+    <h4>Uso</h4>
+    <p>En esta escena, puedes crear y modificar figuras tridimensionales creadas por mallas de triángulos mediante
+      comandos. Los comandos se introducen en el campo de texto y se ejecutan pulsando el botón "Ejecutar". Para
+      restablecer la escena y la cámara a la posición inicial, se debe utilizar el botón "Restablecer".</p>
+
+    <p>Los comandos disponibles son:</p>
+
+    <ul>
+      <li><strong><i>crear(cubo, ancho, alto, profundidad):</i></strong> Crea un cubo con las dimensiones especificadas.
+      </li>
+      <li><strong><i>crear(tetraedro, radio):</i></strong> Crea un tetraedro con el radio especificado.</li>
+      <li><strong><i>crear(octaedro, radio):</i></strong> Crea un octaedro con el radio especificado.</li>
+      <li><strong><i>crear(icosaedro, radio):</i></strong> Crea un icosaedro con el radio especificado.</li>
+      <li><strong><i>crear(esfera, radio, meridianos, paralelos):</i></strong> Crea una esfera con el radio, meridianos
+        y paralelos especificados.</li>
+      <li><strong><i>crear(cilindro, radioSuperior, radioInferior, altura, radialSegments, heightSegments):</i></strong>
+        Crea un cilindro con los parámetros especificados.</li>
+      <li><strong><i>crear(torus, radio, tube, radialSegments, tubularSegments):</i></strong> Crea un torus con los
+        parámetros especificados.</li>
+      <li><strong><i>crear(cono, radio, altura, radialSegments, heightSegments):</i></strong> Crea un cono con los
+        parámetros especificados.</li>
+    </ul>
+
+    <p><strong>Restricciones</strong></p>
+    <ul>
+      <li><strong>Cubo:</strong> Máximo ancho, alto y profundidad: 10.</li>
+      <li><strong>Tetraedro, Octaedro, Icosaedro:</strong> Máximo radio: 10.</li>
+      <li><strong>Esfera:</strong> Máximo radio: 10, máximo meridianos y paralelos: 64.</li>
+      <li><strong>Cilindro y Cono:</strong> Máximo radio superior e inferior: 10, máximo altura: 20, máximo segmentos
+        radiales y de altura: 64.</li>
+      <li><strong>Torus:</strong> Máximo radio: 10, máximo radio del tubo: 5, máximo segmentos radiales y tubulares: 64.
+      </li>
+    </ul>
+
+    <p><strong>Ejemplos</strong></p>
+    <ul>
+      <li>Crear un cubo de 5x5x5: <code>crear(cubo, 5, 5, 5)</code></li>
+      <li>Crear un tetraedro con radio 5: <code>crear(tetraedro, 5)</code></li>
+      <li>Crear un octaedro con radio 5: <code>crear(octaedro, 5)</code></li>
+      <li>Crear un icosaedro con radio 5: <code>crear(icosaedro, 5)</code></li>
+      <li>Crear una esfera con radio 5, 32 meridianos y 32 paralelos: <code>crear(esfera, 5, 32, 32)</code></li>
+      <li>Crear un cilindro con radio superior 5, radio inferior 5, altura 10, 32 segmentos radiales y 1 segmento de
+        altura: <code>crear(cilindro, 5, 5, 10, 32, 1)</code></li>
+      <li>Crear un torus con radio 5, tubo 2, 16 segmentos radiales y 32 segmentos tubulares:
+        <code>crear(torus, 5, 2, 16, 32)</code></li>
+      <li>Crear un cono con radio 5, altura 10, 32 segmentos radiales y 1 segmento de altura:
+        <code>crear(cono, 5, 10, 32, 1)</code></li>
+    </ul>
+  </div>

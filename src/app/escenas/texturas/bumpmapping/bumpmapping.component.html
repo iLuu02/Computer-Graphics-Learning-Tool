@@ -1,0 +1,57 @@
+<div class="escena">
+  <div class="controles">
+    <input type="text" [(ngModel)]="userCommand" placeholder="Comando">
+    <button (click)="executeCommand()">Ejecutar</button>
+    <button (click)="resetScene()">Restablecer</button>
+    <div class="texture-buttons">
+      <button *ngFor="let texture of textures" [ngStyle]="{'background-image': 'url(' + texture.colorPath + ')'}"
+        (click)="cambiarTextura(texture.colorPath, texture.bumpPath)">
+      </button>
+    </div>
+  </div>
+  <p><strong>Escala de Bump</strong>: {{ bumpScale }}</p>
+  <canvas #c></canvas>
+
+  <div class="explicacion">
+    <h3>Bump Mapping</h3>
+    <p>El bump mapping es una técnica utilizada para simular rugosidad y detalles en la superficie de los modelos 3D sin
+      aumentar la complejidad geométrica. Esto se logra utilizando un <strong>mapa de relieve</strong> (bump map).</p>
+
+    <h4>Mapas de Relieve</h4>
+    <p>Los mappas de relieve afectan en cómo se reflejan las luces en la superficie del modelo. Para ello, modifican las
+      normales de la superficie para crear la ilusión de profundidad y detalle:</p>
+    <ul>
+      <li><strong>Bump Map:</strong> Una imagen en escala de grises donde los valores más claros indican elevaciones y
+        los valores más oscuros indican depresiones en la superficie.</li>
+    </ul>
+    <p>Durante el proceso de renderizado, las normales de la superficie se ajustan según el mapa de relieve, creando
+      sombras y luces que dan la impresión de una superficie detallada.</p>
+
+    <img src="assets/imagenes/bumpmap.jpg" alt="Bump Map">
+
+    <h4>Uso</h4>
+    <p>En esta escena, se pueden aplicar diferentes texturas de bump mapping a los modelos pulsando los botones al lado
+      del botón "restablecer". Además, se puede ajustar la escala del bump para observar los efectos en el modelo. Para
+      trabajar con esta escena, se deben introducir comandos en el campo de texto y pulsar el botón "Ejecutar". Para
+      restablecer la escena y la cámara a la posición inicial, se debe utilizar el botón "Restablecer".</p>
+
+    <p>Los comandos disponibles son:</p>
+    <ul>
+      <li><strong><i>establecerEscalaBump(valorEscala):</i></strong> Ajusta la escala del bump mapping en la textura. Se
+        puede ingresar un valor numérico para cambiar la intensidad del efecto.</li>
+      <li><strong><i>cambiarModelo(tipoModelo):</i></strong> Cambia el modelo 3D de la escena. Los tipos de modelo
+        pueden ser
+        cubo, esfera o cono.</li>
+    </ul>
+
+    <p><strong>Restricciones</strong></p>
+    <p>El valor de escala de bump no puede ser menor a 0 o mayor a 1000.</p>
+
+    <p><strong>Ejemplos</strong></p>
+    <ul>
+      <li>Establecer la escala del bump a 20: <code>establecerEscalaBump(20)</code></li>
+      <li>Cambiar el modelo a una esfera: <code>cambiarModelo(esfera)</code></li>
+    </ul>
+  </div>
+
+</div>

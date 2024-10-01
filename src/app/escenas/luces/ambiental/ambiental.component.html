@@ -1,0 +1,65 @@
+<div class="escena">
+  <div class="controles">
+    <input type="text" [(ngModel)]="userCommand" placeholder="Comando">
+    <button (click)="executeCommand()">Ejecutar</button>
+    <button (click)="resetScene()">Restablecer</button>
+  </div>
+  <div class="lights-list">
+    <div *ngFor="let light of lights" class="light-item" [style.background]="light.light.color.getStyle()">
+      <div><strong>ID: {{ light.id }}</strong></div>
+      <div><strong>Intensidad: {{ light.light.intensity }}</strong></div>
+    </div>
+  </div>
+  <canvas #c></canvas>
+
+  <div class="explicacion">
+    <h3>Luz ambiental</h3>
+    <p>La luz ambiental, o luz ambiente, es un tipo de iluminación en entornos 3D que proporciona una
+      <strong>iluminación
+        general y uniforme</strong>. Este tipo de luz no tiene una dirección específica y simula la luz que se refleja
+      desde todas
+      las superficies y objetos, llenando sombras y áreas oscuras para evitar contrastes extremos.
+    </p>
+
+    <img src="assets/imagenes/luzAmbiental.png" alt="Luz Ambiental">
+
+    <p>Viene determinada por los siguientes parámetros:</p>
+    <ul>
+      <li><strong>Intensidad</strong> de la luz</li>
+      <li><strong>Color</strong> de la luz</li>
+    </ul>
+
+    <h4>Uso</h4>
+    <p>En esta escena es posible trabajar con <strong>múltiples luces ambientales</strong> de manera simultánea y ver los efectos que
+      producen sobre el modelo.
+      Para ello se proporciona una serie de comandos que permiten tanto crear y borrar luces, como modificar los
+      parámetros de intensidad y color de las ya existentes.
+
+    <p>Para trabajar con esta escena introduciremos comandos en el campo de texto y pulsaremos el botón "Ejecutar". Para
+      restablecer la escena y la cámara a la posición inicial utilizaremos el botón "Restablecer"</p>
+
+    <p>Los comandos disponibles son:</p>
+
+    <ul>
+      <li><strong><i>crearLuzAmbiental(color, intensidad):</i></strong> Permite crear una luz ambiental con uno de los
+        colores de la lista proporcionada y con un valor de intensidad numérico</li>
+      <li><strong><i>actualizarLuz(id, color, intensidad):</i></strong> Permite actualizar las propiedades de color e
+        intensidad de la luz "id". <strong>No introducir espacios entre los parámetros con este comando</strong>  (Ver ejemplo)</li>
+      <li><strong><i>borrarLuz(id):</i></strong> Permite borrar la luz ambiental "id".</li>
+    </ul>
+
+    <p><strong>Lista de colores:</strong> [rojo, verde, azul, amarillo, morado, rosa, naranja, marron, cian, gris, oro,
+      plata, blanco, negro]
+    </p>
+
+    <p><strong>Restricciones</strong></p>
+    <p>El número máximo de luces simultáneas es 10.</p>
+
+    <p><strong>Ejemplos</strong></p>
+    <ul>
+      <li>Crear una luz ambiental azul con intensidad 2: <code>crearLuzAmbiental(azul, 2)</code></li>
+      <li>Modificar las propiedades de la luz ambiental con id 1: <code>actualizarLuz(1,rosa,3)</code>. <strong>Asegurarse de no introducir espacios entre los parámetros</strong></li>
+      <li>Eliminar la luz 1: <code>borrarLuz(1)</code></li>
+    </ul>
+  </div>
+</div>

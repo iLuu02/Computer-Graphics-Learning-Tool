@@ -1,0 +1,82 @@
+<div class="escena">
+  <div class="controles">
+    <input type="text" [(ngModel)]="userCommand" placeholder="Comando">
+    <button (click)="executeCommand()">Ejecutar</button>
+    <button (click)="resetScene()">Restablecer</button>
+  </div>
+  <div class="lights-list">
+    <div *ngFor="let light of lights" class="light-item" [style.background]="light.light.color.getStyle()">
+      <div><strong>ID: {{ light.id }}</strong></div>
+      <div><strong>Intensidad: {{ light.light.intensity }}</strong></div>
+    </div>
+  </div>
+  <canvas #c></canvas>
+
+  <div class="explicacion">
+    <h3>Luz direccional</h3>
+    <p>La luz direccional es un tipo de iluminación utilizada en entornos 3D que simula una fuente de luz ubicada a
+      una <strong>distancia infinita</strong>. Esto hace que los rayos de luz sean paralelos, como la luz del Sol. Es
+      útil para crear
+      sombras nítidas y definir claramente la dirección de la luz en una escena.
+    </p>
+
+    <img src="assets/imagenes/luzDireccional.png" alt="Luz Direccional">
+
+    <p>Viene determinada por los siguientes parámetros:</p>
+    <ul>
+      <li><strong>Intensidad</strong> de la luz</li>
+      <li><strong>Color</strong> de la luz</li>
+      <li><strong>Posición</strong> de la luz en el espacio</li>
+      <li><strong>Dirección</strong> a la que apunta la luz</li>
+    </ul>
+
+    <h4>Uso</h4>
+    <p>En esta escena es posible trabajar con <strong>múltiples luces direccionales</strong> de manera simultánea y ver
+      los efectos que
+      producen sobre el modelo.
+      Para ello se proporciona una serie de comandos que permiten tanto crear y borrar luces, modificar los
+      parámetros de intensidad y color de las ya existentes además de cambiar la posición de la luz y la dirección a la
+      que apuntan los rayos.
+
+    <strong>Todas las luces creadas apuntan al (0, 0, 0) por defecto.</strong>
+
+    <p>Para trabajar con esta escena introduciremos comandos en el campo de texto y pulsaremos el botón "Ejecutar". Para
+      restablecer la escena y la cámara a la posición inicial utilizaremos el botón "Restablecer"</p>
+
+    <p>Los comandos disponibles son:</p>
+
+    <ul>
+      <li><strong><i>crearLuzDireccional(color, intensidad, x, y, z):</i></strong> Permite crear una luz direccional con
+        uno de los
+        colores de la lista proporcionada con un valor de intensidad numérico en la posición especial determinada por el
+        punto (x,y,z).</li>
+      <li><strong><i>cambiarPosicion(id, x, y, z):</i></strong> Permite cambiar la posición de la luz "id" de su punto
+        actual al punto (x,y,z)</li>
+      <li><strong><i>cambiarDireccionLuz(id, x, y, z):</i></strong> Permite cambiar hacia dónde apuntarán los rayos de la
+        luz "id" (punto x,y,z en el espacio).<strong> Asegurarse de no introducir espacios entre los parámetros</strong>
+      </li>
+      <li><strong><i>actualizarLuz(id, color, intensidad):</i></strong> Permite actualizar el color e intensidad de la
+        luz "id".</li>
+      <li><strong><i>borrarLuz(id:)</i></strong> Permite borrar la luz direccional "id".</li>
+    </ul>
+
+    <p><strong>Lista de colores:</strong> [rojo, verde, azul, amarillo, morado, rosa, naranja, marron, cian, gris, oro,
+      plata, blanco, negro]
+    </p>
+
+    <p><strong>Restricciones</strong></p>
+    <p>El número máximo de luces simultáneas es 10.</p>
+
+    <p><strong>Ejemplos</strong></p>
+    <ul>
+      <li>Crear una luz direccional morada con intensidad 3 en el punto (3,3,3):
+        <code>crearLuzDireccional(morado, 3, 3, 3, 3)</code></li>
+      <li>Cambiar la posición de la luz con id 1 al punto (1,2,3): <code>cambiarPosicion(1, 1, 2, 3)</code></li>
+      <li>Cambiar la dirección de la luz 1 para que apunte al punto (1,1,0):<code>cambiarDireccionLuz(1, 1, 1, 0)</code>
+      </li>
+      <li>Actualizar las propiedades de la luz 1: <code>actualizarLuz(1,verde,2)</code> <strong>. Asegurarse de no
+          introducir espacios entre los parámetros</strong></li>
+      <li>Eliminar la luz 1: <code>borrarLuz(1)</code></li>
+    </ul>
+  </div>
+</div>
